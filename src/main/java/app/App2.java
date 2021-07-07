@@ -14,6 +14,8 @@ public class App2 {
 	
 	public static void main(String[] args) throws SQLException {
 		
+		/*Testes da APP*/
+		
 		PreparedStatement stmt;
 		
 		ConnectionFactory connFactory = new ConnectionFactory();

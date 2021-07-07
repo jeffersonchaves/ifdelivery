@@ -4,6 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 import database.ConnectionFactory;
 import enums.OrderStatus;
 import models.Order;
@@ -11,6 +15,29 @@ import models.Order;
 public class OrderRepository {
 	
 	private Connection connection = ConnectionFactory.getConnection();
+	
+	public Order make(Order order) throws SQLException {
+		
+		/*PEDIDO*/
+		PreparedStatement stmt = connection.prepareStatement("INSERT INTO tb_order(latitude, longitude, moment, status) VALUES(?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+		
+		stmt.setDouble(1, order.getLatitude());
+		stmt.setDouble(2, order.getLongitude());
+		stmt.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
+		stmt.setInt(4, 0);
+		
+		stmt.execute();
+		
+		ResultSet result = stmt.getGeneratedKeys();
+		
+		if (result.next()) {
+			order.setId(result.getLong(1));
+		}
+		
+		//relacionar com os produtos
+		
+		return order;
+	}
 	
 	
 	public void findAll(){

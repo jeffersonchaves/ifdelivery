@@ -15,7 +15,6 @@ public class ProductService {
 		this.repository = new ProductRepository();
 	}
 	
-	
 	public List<Product> findAll() {
 		//validacoes
 		return repository.findAll();
